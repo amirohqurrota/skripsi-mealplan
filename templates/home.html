@@ -1,0 +1,423 @@
+{% extends 'base.html' %} {% block content %}
+<body class="bg-primary-subtle">
+  <script
+    rel="javascript"
+    type="text/javascript"
+    href="js/jquery-1.11.3.min.js"
+  >
+    function getBodyStatus() {
+      console.log("hello");
+      $.ajax({
+        type: "POST",
+        url: "/get-body-status",
+        data: {
+          weight: document.getElementById("weight").value,
+          height: document.getElementById("height").value,
+        },
+        success: function (response) {
+          document.getElementById("goals").disabled = false;
+          document.getElementById("bodyStatusInformation").hidden = false;
+          const strInformation =
+            "Your body level is : <mark>" +
+            response.bodyLevel +
+            "</mark>,and your bmi is: <mark>" +
+            response.bmi +
+            "</mark> (normal bmi is 18,5 - 24,9)";
+          document.getElementById("bodyStatusInformation").innerHTML =
+            strInformation;
+          console.log(response.bmi);
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    }
+  </script>
+  <section
+    class="bg-center bg-no-repeat bg-[url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')] bg-gray-700 bg-blend-multiply"
+  >
+    <div class="px-4 mx-auto max-w-screen-xl py-24 lg:py-56">
+      <div class="text-center">
+        <h1
+          class="text-center mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl"
+        >
+          Meal Plan Optimization
+        </h1>
+        <p
+          class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
+        >
+          Let Food Be the Thy Medicine, Thy Medicine Shall be Thy Food.
+        </p>
+      </div>
+      <div
+        class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
+      >
+        <a
+          href="#"
+          class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+        >
+          Personalize Your Meal Plan Now
+          <svg
+            aria-hidden="true"
+            class="ml-2 -mr-1 w-4 h-4"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </a>
+        <!-- Modal toggle -->
+        <button
+          data-modal-target="staticModal"
+          data-modal-toggle="staticModal"
+          class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
+          type="button"
+        >
+          Input Personal Data
+        </button>
+
+        <!-- Main modal -->
+        <div
+          id="staticModal"
+          data-modal-backdrop="static"
+          tabindex="-1"
+          aria-hidden="true"
+          class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        >
+          <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <!-- Modal header -->
+              <div
+                class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
+              >
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                  Input Your Personal Data
+                </h3>
+                <button
+                  type="button"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-hide="staticModal"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <!-- Modal body -->
+              <div class="p-6 space-y-6">
+                <p
+                  class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                >
+                  With less than a month to go before the European Union enacts
+                  new consumer privacy laws for its citizens, companies around
+                  the world are updating their terms of service agreements to
+                  comply.
+                </p>
+                <div
+                  class="block max-w-2xl rounded-lg p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                >
+                  <form action="mealplan" method="post" id="formPersonalData">
+                    <div class="mb-4">
+                      <label
+                        for="age"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Your Age</label
+                      >
+                      <input
+                        type="age"
+                        id="age"
+                        name="age"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="input your age"
+                        required
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label
+                        for="weight"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Your Weight</label
+                      >
+                      <input
+                        type="weight"
+                        id="weight"
+                        name="weight"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="input your weight in kilograms"
+                        required
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label
+                        for="height"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Your Height</label
+                      >
+                      <input
+                        type="height"
+                        id="height"
+                        name="height"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="input your height in centimeters"
+                        required
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label
+                        for="gender"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Gender</label
+                      >
+                      <select
+                        id="gender"
+                        name="gender"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option selected>Gender</option>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-4">
+                      <label
+                        for="goals"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Goals</label
+                      >
+                      <div class="flex flex-row items-center">
+                        <button
+                          class="inline-flex justify-center hover:text-gray-900 items-center p-2 mb-2 text-gray-900 text-xs bg-gray-300 font-medium text-center rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
+                          type="button"
+                          onClick="getBodyStatus()"
+                        >
+                          Get Your Body Status
+                        </button>
+                        <p
+                          class="text-xs ms-2"
+                          hidden
+                          id="bodyStatusInformation"
+                        ></p>
+                      </div>
+                      <select
+                        id="goals"
+                        disabled
+                        name="goals"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option selected disabled>Goals</option>
+                        <option value="loose">Loose Weight</option>
+                        <option value="maintain">
+                          Maintain Current Weight
+                        </option>
+                        <option value="gain">Gain Weight</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-4">
+                      <label
+                        for="activity"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Activity Level</label
+                      >
+                      <div class="flex flex-wrap justify-center">
+                        <div
+                          class="w-36 m-4 bg-lime-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <img
+                            class="rounded-t-lg"
+                            src="https://images.unsplash.com/photo-1549057446-9f5c6ac91a04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80"
+                            alt=""
+                          />
+                          <div class="p-2">
+                            <h5
+                              class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white"
+                            >
+                              Sedentary
+                            </h5>
+                            <p
+                              class="mb-3 text-xs text-center text-gray-700 dark:text-gray-400"
+                            >
+                              You do intentional exercise every day that is
+                              equivalent to briskly walking for at least one
+                              hour and 45 minutes - briskly walking is walking
+                              at 4mph
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="w-36 m-4 bg-lime-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <img
+                            class="rounded-t-lg"
+                            src="../static/image/lightly-active.webp"
+                            alt=""
+                          />
+                          <div class="p-2">
+                            <h5
+                              class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white"
+                            >
+                              Lightly active
+                            </h5>
+                            <p
+                              class="mb-3 text-xs text-center text-gray-700 dark:text-gray-400"
+                            >
+                              You do intentional exercise every day for at least
+                              30 minutes The baseline for this is walking for 30
+                              minutes at 4mph - this is walking at a brisk pace
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="w-36 m-4 bg-lime-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <img
+                            class="rounded-t-lg"
+                            src="../static/image/moderatelyy-active.webp"
+                            alt=""
+                          />
+                          <div class="p-2">
+                            <h5
+                              class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white"
+                            >
+                              Moderately active
+                            </h5>
+                            <p
+                              class="mb-3 text-xs text-center text-gray-700 dark:text-gray-400"
+                            >
+                              You do intentional exercise every day that is
+                              equivalent to briskly walking for at least one
+                              hour and 45 minutes - briskly walking is walking
+                              at 4mph
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="w-36 m-4 bg-lime-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <img
+                            class="rounded-t-lg"
+                            src="../static/image/very-active.webp"
+                            alt=""
+                          />
+                          <div class="p-2">
+                            <h5
+                              class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white"
+                            >
+                              Very active
+                            </h5>
+                            <p
+                              class="mb-3 text-center text-xs text-gray-700 dark:text-gray-400"
+                            >
+                              You do intentional exercise every day that is
+                              equivalent to briskly walking for at least one
+                              hour and 45 minutes - briskly walking is walking
+                              at 4mph
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="w-36 m-4 bg-lime-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <img
+                            class="rounded-t-lg"
+                            src="../static/image/extra-active.webp"
+                            alt=""
+                          />
+                          <div class="p-2">
+                            <h5
+                              class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white"
+                            >
+                              Extra active
+                            </h5>
+                            <p
+                              class="mb-3 text-xs text-center text-gray-700 dark:text-gray-400"
+                            >
+                              Here are the biggest enterprise technology
+                              acquisitions of 2021 so far, in reverse
+                              chronological order.
+                            </p>
+                          </div>
+                        </div>
+                        <p class="text-gray-500 text-xs dark:text-gray-400">
+                          for detailed information the activity level you can
+                          look up
+                          <a
+                            href="#"
+                            class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            this table
+                            <svg
+                              aria-hidden="true"
+                              class="w-5 h-5 ml-1"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"
+                              ></path>
+                            </svg>
+                          </a>
+                        </p>
+                      </div>
+                      <select
+                        id="activity"
+                        name="activityLevel"
+                        class="flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option selected>Choose an Activity Level</option>
+                        <option value="sedentary">Sedentary</option>
+                        <option value="lightly">Lightly</option>
+                        <option value="moderately">Moderately</option>
+                        <option value="very_active">Very Active</option>
+                        <option value="extra_active">Extra Active</option>
+                      </select>
+                    </div>
+                    <!-- Modal footer -->
+                    <input
+                      type="submit"
+                      form="formPersonalData"
+                      name="formPersonalData"
+                      value="Generate Meal Plan"
+                      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <p
+          class="mb-8 mt-8 text-lg font-normal text-gray-300 lg:text-m sm:px-16 lg:px-36"
+        >
+          Amiroh Qurrota A'yun 192410103037
+        </p>
+      </div>
+    </div>
+  </section>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"
+  ></script>
+</body>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'base.html' %} {% block content %}
+<body class="bg-primary-subtle">
+  <div
+    class="p-10 w-100 bg-gray-700 bg-blend-multiply"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+      background-repeat: repeat-y;
+      background-size: cover;
+    "
+  >
+    <div class="mt-10 flex flex-col items-center">
+      <div
+        class="mt-10 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 w-full"
+      >
+        <img
+          class="object-cover w-16 rounded-full dark:ring-gray-500 h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+          src="../static/image/man.png"
+          alt=""
+        />
+        <div class="flex flex-col justify-between p-4 leading-normal">
+          <h5
+            class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Calories and Nutrition Needs
+          </h5>
+          <table class="table-auto">
+            <tbody class="text-sm">
+              <tr>
+                <td>Body Categories :</td>
+                <td>{{bodyLevel}}</td>
+              </tr>
+              <tr>
+                <td>Calories needs in a day :</td>
+                <td>{{calNeeds}} gr</td>
+              </tr>
+              <tr>
+                <td>Protein needs in a day :</td>
+                <td>{{protNeeds}} gr</td>
+              </tr>
+              <tr>
+                <td>Carbohydrates needs in a day :</td>
+                <td>{{carboNeeds}} gr</td>
+              </tr>
+              <tr>
+                <td>Fat needs in a day :</td>
+                <td>{{fatNeeds}} gr</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mt-10 flex flex-wrap justify-center">
+        <div class="w-full px-8">
+          <div
+            class="py-2 px-8 tx-4 mt-10 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 w-full"
+          >
+            <h5 class="font-bold">This Meal Plan contains :</h5>
+            <div class="w-full flex flex-row justify-between">
+              <div class="flex flex-row">
+                <h5>Calories</h5>
+                <p>: 35 gr</p>
+              </div>
+              <div class="flex flex-row">
+                <h5>Carbohydrates</h5>
+                <p>: 35 gr</p>
+              </div>
+              <div class="flex flex-row">
+                <h5>Protein</h5>
+                <p>: 35 gr</p>
+              </div>
+              <div class="flex flex-row">
+                <h5>Fat</h5>
+                <p>: 35 gr</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%for i in range(1, 8)%}
+        <div
+          class="my-10 mx-10 w-25 h-80 d-inline-block opacity-100 max-w-screen-xl"
+        >
+          <a
+            href="#"
+            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          >
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Day {{i}}
+            </h5>
+            <div class="relative overflow-x-auto">
+              <table
+                class="w-full text-xs text-left text-gray-500 dark:text-gray-400"
+              >
+                <thead
+                  class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
+                >
+                  <tr>
+                    <th scope="col" class="px-4 py-2 rounded-l-lg w-96">
+                      jenis
+                    </th>
+                    <th scope="col" class="px-4 py-2">Breakfast</th>
+                    <th scope="col" class="px-4 py-2 rounded-r-lg">Lunch</th>
+                    <th scope="col" class="px-4 py-2 rounded-r-lg">Dinner</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      Karbohidrat
+                    </th>
+                    <td class="px-4 py-2">
+                      {{ mealPlan.meal_breakfast_carb }}
+                    </td>
+                    <td class="px-4 py-2">{{ mealPlan.meal_lunch_carb }}</td>
+                    <td class="px-4 py-2">{{ mealPlan.meal_dinner_carb }}</td>
+                  </tr>
+                  <tr class="bg-white dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      Protein Hewani
+                    </th>
+                    <td class="px-4 py-2">
+                      {{ mealPlan.meal_breakfast_prot }}
+                    </td>
+                    <td class="px-4 py-2">{{ mealPlan.meal_lunch_prot }}</td>
+                    <td class="px-4 py-2">{{ mealPlan.meal_dinner_prot }}</td>
+                  </tr>
+                  <tr class="bg-white dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      Protein Nabati/Sayuran
+                    </th>
+                    <td class="px-4 py-2">{{ mealPlan.meal_breakfast_veg }}</td>
+                    <td class="px-4 py-2">{{ mealPlan.meal_lunch_veg }}</td>
+                    <td class="px-4 py-2">{{ mealPlan.meal_dinner_veg }}</td>
+                  </tr>
+                  <tr class="bg-white dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      Camilan
+                    </th>
+                    <td class="px-4 py-2">1</td>
+                    <td class="px-4 py-2">-</td>
+                    <td class="px-4 py-2">$2999</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="font-semibold text-gray-900 dark:text-white">
+                    <th scope="row" class="px-6 py-3 text-base">
+                      Total Kalori
+                    </th>
+                    <td class="px-6 py-3">2290 Kcal</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </a>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
