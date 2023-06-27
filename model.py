@@ -265,7 +265,7 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
         current_amount=pd.DataFrame()
         chromosomes = chromosomes.to_numpy(dtype = int)[0]
         chromosomes = chromosomes[0:11]
-        iteration=50
+        iteration=5
         # for i in range(iteration):
         # isGlobalOptimum=falses
         n=0
@@ -407,13 +407,13 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
             self.meal_breakfast_carb = dfFinalEliminated.iloc[int(meal[0])]['NAMA BAHAN']
             self.meal_breakfast_prot = dfFinalEliminated.iloc[int(meal[1])]['NAMA BAHAN']
             self.meal_breakfast_veg = dfFinalEliminated.iloc[int(meal[2])]['NAMA BAHAN']
-            self.meal_breakfast_snack = dfFinalEliminated.iloc[int(meal[3])]['NAMA BAHAN']
-            self.meal_lunch_carb =dfFinalEliminated.iloc[int(meal[4])]['NAMA BAHAN']
-            self.meal_lunch_prot =dfFinalEliminated.iloc[int(meal[5])]['NAMA BAHAN']
-            self.meal_lunch_veg = dfFinalEliminated.iloc[int(meal[6])]['NAMA BAHAN']
-            self.meal_dinner_carb = dfFinalEliminated.iloc[int(meal[7])]['NAMA BAHAN']
-            self.meal_dinner_prot = dfFinalEliminated.iloc[int(meal[8])]['NAMA BAHAN']
-            self.meal_dinner_veg = dfFinalEliminated.iloc[int(meal[9])]['NAMA BAHAN']
+            self.meal_lunch_carb =dfFinalEliminated.iloc[int(meal[3])]['NAMA BAHAN']
+            self.meal_lunch_prot =dfFinalEliminated.iloc[int(meal[4])]['NAMA BAHAN']
+            self.meal_lunch_veg = dfFinalEliminated.iloc[int(meal[5])]['NAMA BAHAN']
+            self.meal_dinner_carb = dfFinalEliminated.iloc[int(meal[6])]['NAMA BAHAN']
+            self.meal_dinner_prot = dfFinalEliminated.iloc[int(meal[7])]['NAMA BAHAN']
+            self.meal_dinner_veg = dfFinalEliminated.iloc[int(meal[8])]['NAMA BAHAN']
+            self.meal_breakfast_snack = dfFinalEliminated.iloc[int(meal[9])]['NAMA BAHAN']
             self.meal_dinner_snack = dfFinalEliminated.iloc[int(meal[10])]['NAMA BAHAN']
             # for i in range (len(meal)):
             #     name = arrayNameMeal[i]
@@ -426,17 +426,39 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
             self.amount_breakfast_carb = amount[0]
             self.amount_breakfast_prot = amount[1]
             self.amount_breakfast_veg = amount[2]
-            self.amount_breakfast_snack = amount[3]
-            self.amount_lunch_carb = amount[4]
-            self.amount_lunch_prot = amount[5]
-            self.amount_lunch_veg = amount[6]
-            self.amount_dinner_carb = amount[7]
-            self.amount_dinner_prot = amount[8]
-            self.amount_dinner_veg = amount[9]
+            self.amount_lunch_carb = amount[3]
+            self.amount_lunch_prot = amount[4]
+            self.amount_lunch_veg = amount[5]
+            self.amount_dinner_carb = amount[6]
+            self.amount_dinner_prot = amount[7]
+            self.amount_dinner_veg = amount[8]
+            self.amount_breakfast_snack = amount[9]
             self.amount_dinner_snack = amount[10]
+            
+            index=0
+            finalCarbs = 0
+            finalProt = 0
+            finalFat = 0
+            finalCal = 0
+            for i in (meal):
+                carbs = float(dfFinalEliminated.iloc[int(i)]['KH (g)'])*amount[index]
+                prot = float(dfFinalEliminated.iloc[int(i)]['PROTEIN (g)'])*amount[index]
+                fat = float(dfFinalEliminated.iloc[int(i)]['LEMAK (g)'])*amount[index]
+                cal = float(dfFinalEliminated.iloc[int(i)]['ENERGI (Kal)'])*amount[index]
+                finalCarbs += carbs
+                finalProt += prot
+                finalFat += fat
+                finalCal += cal
+                index+=1
+            
+            self.total_carbs = finalCarbs
+            self.total_prot = finalProt
+            self.total_fat = finalFat
+            self.total_cal = finalCal
 
         
     mealDay1= MealPlan(goal_menu.iloc[[0]],goal_amount.iloc[[0]])
+    
     
     
     # viewResultByOptimalAmount(goal_amount.iloc[[0]],goal_menu.iloc[[0]],calNeeds)
@@ -447,8 +469,23 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
     return mealDay1
     
 
-# objectTest = createMealPlan(1893,71,284,31.6)
-# print(objectTest.__dict__)
 
+def create7DaysMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
+    Meal1 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    Meal2 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    Meal3 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    Meal4 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    Meal5 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    Meal6 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    Meal7 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+    # totalCarbsInADay = Meal1.total_carbs + 
+    return Meal1,Meal2,Meal3,Meal4,Meal5,Meal6,Meal7
 
+# meal1,meal2,meal3,meal4,meal5,meal6,meal7=create7DaysMealPlan(1900,73,291,32)
+# listMeal = [meal1,meal2,meal3,meal4,meal5,meal6,meal7]
+# # print(listMeal[1])
+# for i in (listMeal):
+#     print("========")
+#     attrs = vars(i)
+#     print(', '.join("%s: %s" % item for item in attrs.items()))
 

@@ -23,10 +23,13 @@ def meal_plan():
     if request.method == "POST" :
         # string = mainModel()
         bodyLevel,calNeeds,protNeeds,carboNeeds,fatNeeds = calculateNeeds(request.form['age'],request.form['weight'],request.form['height'],request.form['gender'],request.form['activityLevel'])
-        mealPlan=createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-        return render_template('mealplan.html',bodyLevel=bodyLevel,calNeeds=calNeeds,protNeeds=protNeeds,carboNeeds=carboNeeds,fatNeeds=fatNeeds,mealPlan=mealPlan)
+        meal1,meal2,meal3,meal4,meal5,meal6,meal7=create7DaysMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+        listMeal = [meal1,meal2,meal3,meal4,meal5,meal6,meal7]
+        return render_template('mealplan.html',bodyLevel=bodyLevel,calNeeds=calNeeds,protNeeds=protNeeds,carboNeeds=carboNeeds,fatNeeds=fatNeeds,mealPlan=listMeal)
     if request.method == "GET":
-        return redirect(url_for('home'))
+        # return redirect(url_for('home'))
+        # listMeal = [meal1,meal2,meal3,meal4,meal5,meal6,meal7]
+        return render_template('mealplan.html',bodyLevel="bodyLevel",calNeeds="343",protNeeds="34",carboNeeds="45",fatNeeds="34")
 
 @app.route("/get-body-status",methods =["POST"])
 def measuring_body():

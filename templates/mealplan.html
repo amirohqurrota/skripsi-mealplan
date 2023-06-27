@@ -75,9 +75,9 @@
             </div>
           </div>
         </div>
-        {%for i in range(1, 8)%}
+        {%for i in range(7)%}
         <div
-          class="my-10 mx-10 w-25 h-80 d-inline-block opacity-100 max-w-screen-xl"
+          class="my-10 mx-10 w-25 h-80 d-inline-block opacity-100 max-w-screen-xl mb-20"
         >
           <a
             href="#"
@@ -86,19 +86,17 @@
             <h5
               class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
             >
-              Day {{i}}
+              Day {{i+1}}
             </h5>
             <div class="relative overflow-x-auto">
               <table
-                class="w-full text-xs text-left text-gray-500 dark:text-gray-400"
+                class="w-full text-xs text-left text-gray-500 dark:text-gray-400 table-auto"
               >
                 <thead
                   class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
                 >
                   <tr>
-                    <th scope="col" class="px-4 py-2 rounded-l-lg w-96">
-                      jenis
-                    </th>
+                    <th scope="col" class="px-4 py-2 rounded-l-lg">jenis</th>
                     <th scope="col" class="px-4 py-2">Breakfast</th>
                     <th scope="col" class="px-4 py-2 rounded-r-lg">Lunch</th>
                     <th scope="col" class="px-4 py-2 rounded-r-lg">Dinner</th>
@@ -112,46 +110,75 @@
                     >
                       Karbohidrat
                     </th>
-                    <td class="px-4 py-2">
-                      {{ mealPlan.meal_breakfast_carb }}
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_breakfast_carb }} ,
+                      {{mealPlan[i].amount_breakfast_carb}}
                     </td>
-                    <td class="px-4 py-2">{{ mealPlan.meal_lunch_carb }}</td>
-                    <td class="px-4 py-2">{{ mealPlan.meal_dinner_carb }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_lunch_carb }} ,
+                      {{mealPlan[i].amount_lunch_carb}}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_dinner_carb }} ,
+                      {{mealPlan[i].amount_dinner_carb}}
+                    </td>
                   </tr>
                   <tr class="bg-white dark:bg-gray-800">
                     <th
                       scope="row"
-                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      class="px-4 py-2 whitespace-nowrap font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       Protein Hewani
                     </th>
-                    <td class="px-4 py-2">
-                      {{ mealPlan.meal_breakfast_prot }}
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_breakfast_prot }} ,
+                      {{mealPlan[i].amount_breakfast_prot}}
                     </td>
-                    <td class="px-4 py-2">{{ mealPlan.meal_lunch_prot }}</td>
-                    <td class="px-4 py-2">{{ mealPlan.meal_dinner_prot }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_lunch_prot }} ,
+                      {{mealPlan[i].amount_lunch_prot}}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_dinner_prot }} ,
+                      {{mealPlan[i].amount_dinner_prot}}
+                    </td>
                   </tr>
                   <tr class="bg-white dark:bg-gray-800">
                     <th
                       scope="row"
-                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      class="px-4 py-2 whitespace-nowrap font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       Protein Nabati/Sayuran
                     </th>
-                    <td class="px-4 py-2">{{ mealPlan.meal_breakfast_veg }}</td>
-                    <td class="px-4 py-2">{{ mealPlan.meal_lunch_veg }}</td>
-                    <td class="px-4 py-2">{{ mealPlan.meal_dinner_veg }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_breakfast_veg }} ,
+                      {{mealPlan[i].amount_breakfast_veg}}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_lunch_veg }} ,
+                      {{mealPlan[i].amount_lunch_veg}}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_dinner_veg }} ,
+                      {{mealPlan[i].amount_dinner_veg}}
+                    </td>
                   </tr>
                   <tr class="bg-white dark:bg-gray-800">
                     <th
                       scope="row"
-                      class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      class="px-4 py-2 whitespace-nowrap font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       Camilan
                     </th>
-                    <td class="px-4 py-2">1</td>
-                    <td class="px-4 py-2">-</td>
-                    <td class="px-4 py-2">$2999</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_breakfast_snack }} ,
+                      {{mealPlan[i].amount_breakfast_snack}}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">-</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      {{ mealPlan[i].meal_dinner_snack }} ,
+                      {{mealPlan[i].amount_dinner_snack}}
+                    </td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -159,7 +186,7 @@
                     <th scope="row" class="px-6 py-3 text-base">
                       Total Kalori
                     </th>
-                    <td class="px-6 py-3">2290 Kcal</td>
+                    <td class="px-6 py-3">{{mealPlan[i].total_cal}}</td>
                   </tr>
                 </tfoot>
               </table>
