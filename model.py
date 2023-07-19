@@ -51,7 +51,7 @@ def calculateNeeds(age,weight,height,gender,activityLevel):
 
 # =====================generate model section=============
 
-def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
+def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal):
     
     # initiation and read dataframe
     dfFinalEliminated = pd.read_csv("static/data/final_data_done.csv")
@@ -96,21 +96,22 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
         n_pointSize = random.randint(1,3)
         return np.random.choice(columns, size=n_pointSize, replace=False)
 
-    def twopointSelectionPosition():
+    def twopointSelectionPosition(start,end):
         n_pointSize = random.randint(1,3)
-        position = np.random.choice(range(0,11),2,replace=False)
+        position = np.random.choice(range(start,end),2,replace=False)
         position = np.sort(position)
         return position[0], position[1]
 
     def crossover(pop,n_population):
         # multipoint crossover
         popc = pop.copy()
-        for i in range(n_population):
+        for j in range(n_population):
             # inisiasi parent a dan b
             a,b = rouletteWheelSelectionParent(pop)
-            c1,c2 = twopointSelectionPosition()
+            c1,c2 = twopointSelectionPosition(0,11)
+            popc.iloc[j]=pop.iloc[[a]].to_numpy()[0]
             for i in range(c1,c2) :
-                popc.iloc[a][pop.columns[i]], popc.iloc[b][pop.columns[i]] = pop.iloc[b][pop.columns[i]], pop.iloc[a][pop.columns[i]]
+                popc.loc[j , pop.columns[i]] = pop.iloc[b][pop.columns[i]]
         return popc
 
     def mutation(popc,n_population):
@@ -131,7 +132,7 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
             else:
                 FruitData = (dfFinalEliminated.loc[(dfFinalEliminated['Food Group']=='buah') & (dfFinalEliminated['Type']=='single')])
                 source = FruitData.sample(n=1).index
-            popm.iloc[i][mutation]=source[0]
+            popm.loc[i ,mutation]=source[0]
         return popm
 
     def countFitnessMenu(pop,calNeeds):
@@ -174,6 +175,8 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
         pop = np.round(pop, decimals=1)
         pop = pd.DataFrame(pop)
         pop.columns = ['nCarbs_br','nProt_br','nVeggies_br','nCarbs_lunch','nProt_lunch','nVeggies_lunch','nCarbs_dinner','nProt_dinner','nVeggies_dinner','n_snack','n_fruit']
+        for i in range(sizeOfPopulation):
+            pop.loc[i,'n_fruit'] = 2.0
         return pop
 
     def randomSelectionParentAmount(sizeOfPopulation):
@@ -207,13 +210,14 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
             for j in range (11):
                 value = round(alpha * pop.iloc[a][pop.columns[j]] + betha * pop.iloc[b][pop.columns[j]],1)
                 crossoverResult.append(value)
-                popc.loc[i , pop.columns[j]]=value
+            popc.iloc[i] = crossoverResult
         return popc
 
 
     def mutationAmount(pop, sizeOfPopulation):
+        popm = pop.copy()
         for i in range(sizeOfPopulation):
-            a,b = twopointSelectionPosition()
+            a,b = twopointSelectionPosition(0,10)
             for j in range(a,b) :
                 alpha=random.uniform(-0.5,0.4)
                 alpha=round(alpha, 1)
@@ -266,17 +270,19 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
         chromosomes = chromosomes.to_numpy(dtype = int)[0]
         chromosomes = chromosomes[0:11]
         iteration=5
-        # for i in range(iteration):
-        # isGlobalOptimum=falses
+        cr_inner = 0.6
+        mr_inner = 0.4
         n=0
         for i in range(iteration):
             pop=createPopulationAmount()
-            pop=fitnessAmount(pop,chromosomes,calNeeds)
+            # pop=fitnessAmount(pop,chromosomes,calNeeds)
             # popc=crossoverAmount(pop,5)
-            popc=arithmeticCrossoverAmount(pop,5)
-            popc=fitnessAmount(popc,chromosomes,calNeeds)
-            # popm=mutationAmount(popc,5)
-            current_amount = popc.sort_values(by = 'fitness',ascending = True).iloc[[0]]
+            if(random.random() < cr_inner):
+                pop=arithmeticCrossoverAmount(pop,5)
+            if(random.random() < mr_inner):
+                pop=mutationAmount(pop,5)
+            pop=fitnessAmount(pop,chromosomes,calNeeds)
+            current_amount = pop.sort_values(by = 'fitness',ascending = True).iloc[[0]]
             if goal_amount.iloc[0]["fitness"]<current_amount.iloc[0]["fitness"]:
                 goal_amount.iloc[[0]]=current_amount.iloc[[0]]
             # if (n==10):
@@ -329,12 +335,14 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
         print("===CAMILAN===")
         print("camilan pagi (buah) : " , dfFinalEliminated.iloc[int(chromosomes[9])]['NAMA BAHAN'], " ",100*amountArray[9], "gr")
         print("camilan sore : " , dfFinalEliminated.iloc[int(chromosomes[10])]['NAMA BAHAN'], " ",100*amountArray[10], "gr")
+    
     n_iteration=5
     arrayOfIteration = []
     arrayOfFitness = []
-    defCal=False
+    cr_outer = 0.8
+    mr_outer = 0.8
     # popAmount=[]
-    popAmount={
+    popAmountInitiate={
       'nCarbs_br': [], 'nProt_br': [],'nVeggies_br': [],
       'nCarbs_lunch':[],'nProt_lunch':[],'nVeggies_lunch':[],
       'nCarbs_dinner':[],'nProt_dinner':[],'nVeggies_dinner':[],'nSnack':[],'nFruit':[],
@@ -354,43 +362,45 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
       }
     goal_menu=pd.DataFrame(goal_menu)
     goal_amount=pd.DataFrame(goal_amount)
-    popAmount=pd.DataFrame(popAmount)
+    popAmount=pd.DataFrame(popAmountInitiate)
+    print("===============",len(popAmount))
     for i in range (n_iteration):
         fitnessArray=[]
         menuPop = createPopulation(dfFinalEliminated,5)
         menuPop = countFitnessMenu(menuPop,calNeeds)
-        menuPopC=crossover(menuPop,5)
-        menuPopM=mutation(menuPop,5)
-        for j in range(len(menuPopM)):
-            bestAmount = decideAmountThroughGeneticAlgorithm(menuPopM.iloc[[j]],calNeeds)
+        if(random.random() < cr_outer):
+            menuPop=crossover(menuPop,5)
+        if(random.random() < mr_outer):
+            menuPop=mutation(menuPop,5)
+        for j in range(len(menuPop)):
+            bestAmount = decideAmountThroughGeneticAlgorithm(menuPop.iloc[[j]],calNeeds)
             # input final amount to amount dataframe to save best amount in current menu
             popAmount = pd.concat([popAmount,bestAmount.iloc[[0]]], ignore_index = True)
               # add fitness to dataframe menu
             fitnessArray.append(bestAmount._get_value(0,'fitness'))
-            # menuPopM.iloc[i]['fitness']= bestAmount._get_value(0,'fitness')
+            # menuPop.iloc[i]['fitness']= bestAmount._get_value(0,'fitness')
         
-        menuPopM['fitness optimal'] = fitnessArray   
-        conditionArray=np.array([])
-        for k in range (len(popAmount)):
-            if (defCal):
-                condition=True
-                if (popAmount.iloc[k]['caloriesTot']>calNeeds):
-                    # takeout chromosomes
-                    condition=False
-                np.append(conditionArray,condition)
-            else :
-                condition=True
-                if (popAmount.iloc[k]['caloriesTot']<calNeeds):
-                    # takeout chromosomes
-                    condition=False
-                np.append(conditionArray,condition)
-        getIndexOfCondition=np.where(conditionArray==False)[0]
-        menuPopM.drop(getIndexOfCondition)
-        popAmount.drop(getIndexOfCondition)
+        menuPop['fitness optimal'] = fitnessArray   
+        notIdealArray=[]
+        # print(len(popAmount))
+        # print(len(menuPop))
+        for kr in range (len(menuPop)):
+            gramVeggies = 100 * (popAmount.iloc[kr]['nVeggies_br'] + popAmount.iloc[kr]['nVeggies_lunch'] + popAmount.iloc[kr]['nVeggies_dinner'])
+            if (gramVeggies<200):
+                notIdealArray.append(kr)
+            if (usersGoal=='loose'):
+                if (popAmount.iloc[kr]['caloriesTot']>calNeeds):
+                    notIdealArray.append(kr)
+            elif (usersGoal=='gain') :
+                if (popAmount.iloc[kr]['caloriesTot']<calNeeds):
+                    notIdealArray.append(kr)
+
+        popAmount = popAmount.drop(notIdealArray)
+        menuPop = menuPop.drop(notIdealArray)
 
         
-        if goal_menu.iloc[0]['fitness optimal'] < menuPopM.sort_values(by = 'fitness optimal',ascending = False).iloc[0]['fitness optimal']:
-              goal_menu = menuPopM.sort_values(by = 'fitness optimal',ascending = False).iloc[[0]]
+        if (len(menuPop)>0 and goal_menu.iloc[0]['fitness optimal'] < menuPop.sort_values(by = 'fitness optimal',ascending = False).iloc[0]['fitness optimal']):
+              goal_menu = menuPop.sort_values(by = 'fitness optimal',ascending = False).iloc[[0]]
               goal_amount = popAmount.sort_values(by = 'fitness',ascending = False).iloc[[0]]
         
         arrayOfFitness.append(goal_menu.iloc[0]['fitness optimal'])
@@ -454,7 +464,7 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
             self.total_carbs = finalCarbs
             self.total_prot = finalProt
             self.total_fat = finalFat
-            self.total_cal = finalCal
+            self.total_cal = round(finalCal,1)
 
         
     mealDay1= MealPlan(goal_menu.iloc[[0]],goal_amount.iloc[[0]])
@@ -470,14 +480,14 @@ def createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
     
 
 
-def create7DaysMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds):
-    Meal1 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-    Meal2 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-    Meal3 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-    Meal4 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-    Meal5 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-    Meal6 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
-    Meal7 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+def create7DaysMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal):
+    Meal1 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
+    Meal2 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
+    Meal3 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
+    Meal4 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
+    Meal5 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
+    Meal6 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
+    Meal7 = createMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, usersGoal)
     # totalCarbsInADay = Meal1.total_carbs + 
     return Meal1,Meal2,Meal3,Meal4,Meal5,Meal6,Meal7
 

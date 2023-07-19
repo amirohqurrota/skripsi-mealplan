@@ -23,7 +23,7 @@ def meal_plan():
     if request.method == "POST" :
         # string = mainModel()
         bodyLevel,calNeeds,protNeeds,carboNeeds,fatNeeds = calculateNeeds(request.form['age'],request.form['weight'],request.form['height'],request.form['gender'],request.form['activityLevel'])
-        meal1,meal2,meal3,meal4,meal5,meal6,meal7=create7DaysMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds)
+        meal1,meal2,meal3,meal4,meal5,meal6,meal7=create7DaysMealPlan(calNeeds,protNeeds,carboNeeds,fatNeeds, request.form['goals'])
         listMeal = [meal1,meal2,meal3,meal4,meal5,meal6,meal7]
         return render_template('mealplan.html',bodyLevel=bodyLevel,calNeeds=calNeeds,protNeeds=protNeeds,carboNeeds=carboNeeds,fatNeeds=fatNeeds,mealPlan=listMeal)
     if request.method == "GET":

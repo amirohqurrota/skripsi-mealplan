@@ -970,10 +970,10 @@ rebus",KZGPI- 1990,serealia,processed food,63.7,154,3.8,3.5,28.4,0.7,0.6,7,171,0
 826,AP059,Kereput,KZGMI-2001,camilan,processed food,3.5,580,4.8,39.6,51.1,-,1,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
 827,AP060,Ketoprak,KZGPI-1990,serealia,processed food,69.1,153,7.9,7.7,13,2.9,2.6,153,134,3.4,-,-,-,-,3,-,435,0.05,-,-,0,100
 828,AP061,Ketupat kandangan,KZGMI-2001,serealia,processed food,78.5,109,2.2,5.2,13.4,-,0.7,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
-829,AP062,Koya,KZGMI-2001,serealia,processed food,13.2,366,4.2,4.3,77.5,0.8,0.8,153,222,7,-,-,-,-,0,-,-,-,-,-,0,100
-830,AP063,Koya mirasa,KZGMI-2001,serealia,processed food,7.2,370,8,1,82.2,0.4,1.6,83,110,"17.
+829,AP062,Koya,KZGMI-2001,camilan,processed food,13.2,366,4.2,4.3,77.5,0.8,0.8,153,222,7,-,-,-,-,0,-,-,-,-,-,0,100
+830,AP063,Koya mirasa,KZGMI-2001,camilan,processed food,7.2,370,8,1,82.2,0.4,1.6,83,110,"17.
 0",-,-,-,-,3,-,144,0.19,0.45,2.6,0,100
-831,AP064,Koyabu,KZGMI-2001,serealia,processed food,44.2,241,3.4,4.3,47.2,-,0.9,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
+831,AP064,Koyabu,KZGMI-2001,camilan,processed food,44.2,241,3.4,4.3,47.2,-,0.9,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
 832,AP065,Kue ali,KZGMI-2001,camilan,processed food,12.8,440,3.8,18.5,64.5,0.3,0.4,27,47,2.5,-,-,-,-,0,-,0,0.13,0.09,0,0,100
 833,AP066,Kue bangen,KZGMI-2001,camilan,processed food,5.6,442,3.3,14.7,74.2,-,2.2,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
 834,AP067,Kue gelang,KZGMI-2001,camilan,processed food,7.1,448,5.8,16.1,70,-,1,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
@@ -1002,7 +1002,7 @@ rebus",KZGPI- 1990,serealia,processed food,63.7,154,3.8,3.5,28.4,0.7,0.6,7,171,0
 857,AP090,Nasi gurih,KZGMI-2001,serealia,processed food,60.5,190,4.7,7.5,26,0.7,1.3,12,62,0.8,296,52,0.2,1.2,0,0,-,0.11,0.06,2.1,0,100
 858,AP091,Nasi minyak,KZGMI-2001,serealia,processed food,53.3,207,3.5,5,37.1,0.8,1.1,26,100,1.5,74,174,0.2,2.2,0,0,-,0.14,0.07,2.6,0,100
 859,AP092,Nasi rames,KZGMS-1993,serealia,processed food,65.8,155,10.3,4.2,19.1,-,0.6,239,62,1.8,265,-,-,-,96,-,3140,0.59,0,-,-,100
-860,AP093,Nopia spesial,KZGPI- 1990,serealia,processed food,11.5,387,5.3,7.6,74.3,0.3,1.3,903,133,4.2,-,-,-,-,-,-,512,0.17,-,-,0,100
+860,AP093,Nopia spesial,KZGPI- 1990,camilan,processed food,11.5,387,5.3,7.6,74.3,0.3,1.3,903,133,4.2,-,-,-,-,-,-,512,0.17,-,-,0,100
 861,AP094,Onde-onde,KZGMI-2001,camilan,processed food,27.7,336,4,9.8,57.9,-,0.6,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
 862,AP095,Padamaran,KZGMI-2001,camilan,processed food,67.6,171,3.9,8.9,18.8,-,0.8,-,-,-,-,-,-,-,-,-,-,-,-,-,-,100
 863,AP096,Pastel,KZGMS-1993,camilan,processed food,38.3,307,4.5,13.3,42.4,-,1.5,296,53,2.5,-,-,-,-,0,-,5360,0.15,-,-,0,100
